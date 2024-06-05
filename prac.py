@@ -1,14 +1,27 @@
-
 import FreeSimpleGUI as sg
+from Convert import convert
 
-label = sg.Text("Enter Feet")
-input_box1 = sg.InputText(tooltip="Enter Feet")
+feet_label = sg.Text("Enter feet: ")
+feet_input = sg.Input(key="feet")
 
-label1 = sg.Text("Enter Inches")
-input_box2 = sg.InputText(tooltip="Enter inches")
+inches_label = sg.Text("Enter inches: ")
+inches_input = sg.Input(key="inches")
 
-Add_Button = sg.Button("Convert")
+button = sg.Button("Convert")
+output_label = sg.Text("", key="output")
 
-window = sg.Window("My app",[[label,input_box1],[label1,input_box2],[Add_Button]])
-window.read()
+window = sg.Window("Convertor",
+                   layout=[[feet_label, feet_input],
+                           [inches_label, inches_input],
+                           [button, output_label]])
+
+while True:
+    event, values = window.read()
+    feet = float(values["feet"])
+    inches = float(values["inches"])
+
+    result = convert(feet, inches)
+    window["output"].update(value=f"{result} m", text_color="white")
+
+
 window.close()
